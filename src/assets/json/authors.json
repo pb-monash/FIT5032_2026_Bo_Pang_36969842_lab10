@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Jane Austen",
+    "nationality": "British",
+    "famousWorks": [
+      "Pride and Prejudice",
+      "Sense and Sensibility",
+      "Emma"
+    ]
+  },
+  {
+    "name": "George Orwell",
+    "nationality": "British",
+    "famousWorks": [
+      "Animal Farm",
+      "Nineteen Eighty-Four"
+    ]
+  },
+  {
+    "name": "Haruki Murakami",
+    "nationality": "Japanese",
+    "famousWorks": [
+      "Norwegian Wood",
+      "Kafka on the Shore",
+      "1Q84"
+    ]
+  },
+  {
+    "name": "Toni Morrison",
+    "nationality": "American",
+    "famousWorks": [
+      "Beloved",
+      "Song of Solomon"
+    ]
+  }
+]
