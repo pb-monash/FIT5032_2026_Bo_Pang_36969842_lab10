@@ -42,5 +42,3 @@ Cloudflare Pages settings:
 - Build command: `npm run build`
 - Build output directory: `dist`
 - Environment variable: `VITE_OPENWEATHER_API_KEY`
-
-The `public/_redirects` file is included so Vue history routes work after deployment.
