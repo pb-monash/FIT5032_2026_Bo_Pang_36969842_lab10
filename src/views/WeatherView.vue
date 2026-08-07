@@ -19,9 +19,22 @@
         </button>
       </form>
 
-      <div v-if="apiKeyMissing" class="status-message warning">
-        Add your OpenWeather API key to .env as VITE_OPENWEATHER_API_KEY.
-      </div>
+      <form
+        v-if="apiKeyMissing"
+        class="search-bar api-key-bar"
+        @submit.prevent="saveApiKey"
+      >
+        <input
+          v-model.trim="apiKeyInput"
+          type="password"
+          class="search-input"
+          placeholder="Enter OpenWeather API key"
+          aria-label="OpenWeather API key"
+        />
+        <button class="search-button" type="submit" :disabled="loading">
+          Save Key
+        </button>
+      </form>
 
       <div v-if="loading" class="status-message">
         Loading weather data...
@@ -64,21 +77,32 @@
 <script>
 import axios from 'axios'
 
-const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
+const envApiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
+const placeholderApiKey = 'replace_with_your_openweather_api_key'
+const storageKey = 'openweather_api_key'
 
 export default {
   name: 'WeatherView',
   data() {
     return {
       city: '',
+      apiKeyInput: '',
+      savedApiKey: '',
       weatherData: null,
       loading: false,
       error: '',
     }
   },
   computed: {
+    activeApiKey() {
+      if (envApiKey && envApiKey !== placeholderApiKey) {
+        return envApiKey
+      }
+
+      return this.savedApiKey
+    },
     apiKeyMissing() {
-      return !apiKey || apiKey === 'replace_with_your_openweather_api_key'
+      return !this.activeApiKey
     },
     temperature() {
       return this.weatherData ? Math.round(this.weatherData.main.temp) : null
@@ -96,9 +120,22 @@ export default {
     },
   },
   mounted() {
+    this.savedApiKey = localStorage.getItem(storageKey) || ''
     this.fetchCurrentLocationWeather()
   },
   methods: {
+    saveApiKey() {
+      if (!this.apiKeyInput) {
+        this.error = 'Please enter an OpenWeather API key.'
+        return
+      }
+
+      this.savedApiKey = this.apiKeyInput
+      localStorage.setItem(storageKey, this.savedApiKey)
+      this.apiKeyInput = ''
+      this.error = ''
+      this.fetchCurrentLocationWeather()
+    },
     async fetchCurrentLocationWeather() {
       if (this.apiKeyMissing) {
         return
@@ -119,7 +156,7 @@ export default {
           await this.fetchWeatherData(url, {
             lat: latitude,
             lon: longitude,
-            appid: apiKey,
+            appid: this.activeApiKey,
             units: 'metric',
           })
         },
@@ -143,7 +180,7 @@ export default {
       const url = 'https://api.openweathermap.org/data/2.5/weather'
       await this.fetchWeatherData(url, {
         q: this.city,
-        appid: apiKey,
+        appid: this.activeApiKey,
         units: 'metric',
       })
     },
