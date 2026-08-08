@@ -1,6 +1,6 @@
 # FIT5032_2026_Bo_Pang_36969842_lab10
 
-FIT5032 Lab 10 and Lab 11 Vue project for API usage and Cloudflare Pages deployment.
+FIT5032 Lab 9，Lab 10， Lab 11 and Lab 12.
 
 ## Setup
 
