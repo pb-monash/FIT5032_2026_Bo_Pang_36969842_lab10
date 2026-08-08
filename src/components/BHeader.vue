@@ -5,6 +5,7 @@
       <RouterLink to="/WeatherCheck">Get Weather</RouterLink>
       <RouterLink to="/CountBookAPI">Count Book API</RouterLink>
       <RouterLink to="/GetAllBookAPI">GetAllBookAPI</RouterLink>
+      <RouterLink to="/CloudBookCount">Cloud Function</RouterLink>
     </nav>
   </header>
 </template>
