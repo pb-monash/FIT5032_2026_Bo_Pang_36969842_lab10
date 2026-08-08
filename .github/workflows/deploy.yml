@@ -30,6 +30,9 @@ jobs:
         env:
           VITE_BASE_PATH: /FIT5032_2026_Bo_Pang_36969842_lab10/
 
+      - name: Add GitHub Pages SPA fallback
+        run: cp dist/index.html dist/404.html
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
